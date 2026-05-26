@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="FarmEasy">
+  <rect width="512" height="512" rx="96" fill="#2d6a4f"/>
+  <path fill="#95d5b2" d="M256 96c-40 80-120 100-120 180 0 66 54 120 120 120s120-54 120-120c0-80-80-100-120-180z"/>
+  <path fill="#d8f3dc" d="M256 320v96M200 280h112" stroke="#d8f3dc" stroke-width="24" stroke-linecap="round"/>
+</svg>

@@ -13,6 +13,7 @@ export default function AppMenuPage() {
   const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const locale = localStorage.getItem('locale') || 'en';
 
   useEffect(() => {
     if (!appId) return;
@@ -31,20 +32,20 @@ export default function AppMenuPage() {
     setSubtopics(await listSubtopics(topicId));
   }
 
+  const t = (en: string, hi: string) => (locale === 'hi' ? hi : en);
+
   return (
-    <div className="page">
-      <header className="topbar">
-        <Link to="/apps" className="back">← Apps</Link>
-        <h1>Menu</h1>
-      </header>
+    <div className="page-inner">
+      <Link to="/apps" className="back">← {t('Applications', 'ऐप्स')}</Link>
+      <h2>{t('Menu', 'मेनू')}</h2>
 
       <section>
-        <h2 className="section-title">Chapters</h2>
+        <h3 className="section-title">{t('Chapters', 'अध्याय')}</h3>
         <ul className="menu-list">
           {chapters.map((c) => (
             <li key={c.id}>
               <button type="button" className={selectedChapter === c.id ? 'active' : ''} onClick={() => selectChapter(c.id)}>
-                {c.titleHi || c.titleEn}
+                {locale === 'hi' ? (c.titleHi || c.titleEn) : c.titleEn}
               </button>
             </li>
           ))}
@@ -53,12 +54,12 @@ export default function AppMenuPage() {
 
       {topics.length > 0 && (
         <section>
-          <h2 className="section-title">Topics</h2>
+          <h3 className="section-title">{t('Topics', 'विषय')}</h3>
           <ul className="menu-list">
-            {topics.map((t) => (
-              <li key={t.id}>
-                <button type="button" className={selectedTopic === t.id ? 'active' : ''} onClick={() => selectTopic(t.id)}>
-                  {t.titleHi || t.titleEn}
+            {topics.map((item) => (
+              <li key={item.id}>
+                <button type="button" className={selectedTopic === item.id ? 'active' : ''} onClick={() => selectTopic(item.id)}>
+                  {locale === 'hi' ? (item.titleHi || item.titleEn) : item.titleEn}
                 </button>
               </li>
             ))}
@@ -68,10 +69,13 @@ export default function AppMenuPage() {
 
       {subtopics.length > 0 && (
         <section>
-          <h2 className="section-title">Subtopics</h2>
-          <ul className="menu-list">
+          <h3 className="section-title">{t('Subtopics', 'उप-विषय')}</h3>
+          <ul className="menu-list plain">
             {subtopics.map((s) => (
-              <li key={s.id} className="subtopic-item">{s.titleHi || s.titleEn} <span>({s.contentType})</span></li>
+              <li key={s.id} className="subtopic-item">
+                {locale === 'hi' ? (s.titleHi || s.titleEn) : s.titleEn}
+                <span>({s.contentType})</span>
+              </li>
             ))}
           </ul>
         </section>

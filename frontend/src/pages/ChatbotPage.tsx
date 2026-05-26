@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { analyzeImage } from '../api/client';
 
 export default function ChatbotPage() {
   const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [report, setReport] = useState<Record<string, unknown> | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const locale = localStorage.getItem('locale') || 'hi';
+
+  function onFileChange(f: File | null) {
+    setFile(f);
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview(f ? URL.createObjectURL(f) : null);
+  }
 
   async function onAnalyze() {
     if (!file) return;
@@ -14,7 +21,7 @@ export default function ChatbotPage() {
     setError('');
     setReport(null);
     try {
-      const res = await analyzeImage(file, 'hi', false);
+      const res = await analyzeImage(file, locale, false);
       setReport(res);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed');
@@ -24,26 +31,29 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="page">
-      <header className="topbar">
-        <Link to="/apps" className="back">← Apps</Link>
-        <h1>Crop Assistant</h1>
-      </header>
+    <div className="page-inner">
+      <h2>{locale === 'hi' ? 'फसल सहायक' : 'Crop Assistant'}</h2>
+      <p className="muted">{locale === 'hi' ? 'गैलरी या कैमरा से फोटो अपलोड करें' : 'Upload a photo from gallery or camera'}</p>
 
       <div className="card">
-        <label>Upload crop / leaf photo</label>
-        <input type="file" accept="image/*" capture="environment" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={(e) => onFileChange(e.target.files?.[0] || null)}
+        />
+        {preview && <img src={preview} alt="Crop preview" className="preview-img" />}
         <button type="button" className="btn primary" disabled={!file || loading} onClick={onAnalyze}>
-          {loading ? 'Analyzing…' : 'Analyze'}
+          {loading ? (locale === 'hi' ? 'विश्लेषण…' : 'Analyzing…') : (locale === 'hi' ? 'विश्लेषण करें' : 'Analyze')}
         </button>
       </div>
 
       {error && <p className="error">{error}</p>}
       {report && (
         <div className="card report">
-          <h3>Report</h3>
+          <h3>{locale === 'hi' ? 'रिपोर्ट' : 'Report'}</h3>
           <p>{String(report.summary)}</p>
-          <p className="muted">Confidence: {String(report.confidence)}</p>
+          <p className="muted">{locale === 'hi' ? 'विश्वास' : 'Confidence'}: {String(report.confidence)}</p>
           <p className="disclaimer">{String(report.disclaimer)}</p>
         </div>
       )}

@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import WebAppLayout from './layout/WebAppLayout';
 import LoginPage from './pages/LoginPage';
 import AppsPage from './pages/AppsPage';
 import AppMenuPage from './pages/AppMenuPage';
@@ -13,9 +14,18 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/apps" element={<PrivateRoute><AppsPage /></PrivateRoute>} />
-      <Route path="/apps/:appId" element={<PrivateRoute><AppMenuPage /></PrivateRoute>} />
-      <Route path="/chatbot" element={<PrivateRoute><ChatbotPage /></PrivateRoute>} />
+      <Route
+        element={
+          <PrivateRoute>
+            <WebAppLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route path="/apps" element={<AppsPage />} />
+        <Route path="/apps/:appId" element={<AppMenuPage />} />
+        <Route path="/chatbot" element={<ChatbotPage />} />
+      </Route>
+      <Route path="/" element={<Navigate to="/apps" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

@@ -1,6 +1,6 @@
 # FarmEasy Platform
 
-Indian farmer super-app: Java 21 microservices, PostgreSQL, Redis, API Gateway, React PWA, Datadog-ready logging.
+Indian farmer super-app: Java 21 microservices, PostgreSQL, Redis, API Gateway, **React web application (PWA)**, Datadog-ready logging.
 
 ## Architecture
 
@@ -31,15 +31,27 @@ docker compose up --build
 API gateway: http://localhost:8080  
 Swagger (auth): http://localhost:8081/swagger-ui.html
 
-### Frontend
+### Web application (frontend)
+
+Works in **desktop and mobile browsers**, installable as a **PWA**.
 
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run dev          # dev: http://localhost:5173
+npm run build        # production static build → dist/
+npm run preview      # preview build: http://localhost:3000
 ```
 
-Open http://localhost:5173
+**Docker (full stack including web UI):**
+
+```bash
+docker compose up --build
+# Web app: http://localhost:3000
+# API gateway: http://localhost:8080
+```
+
+See [docs/WEB_APPLICATION.md](docs/WEB_APPLICATION.md) for deployment to Cloudflare Pages / Vercel.
 
 ### Test phone login
 1. Send OTP: `POST /api/auth/phone/send-otp` with `{"phoneNumber":"9876543210"}`

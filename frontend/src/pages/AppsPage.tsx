@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { clearSession, getEntitlements, listApps, type Entitlements } from '../api/client';
+import { Link } from 'react-router-dom';
+import { getEntitlements, listApps, type Entitlements } from '../api/client';
 
 type FarmApp = { id: string; code: string; titleEn: string; titleHi: string; descriptionEn: string };
 
 export default function AppsPage() {
-  const navigate = useNavigate();
   const [apps, setApps] = useState<FarmApp[]>([]);
   const [entitlements, setEntitlements] = useState<Entitlements | null>(null);
   const [error, setError] = useState('');
+  const locale = localStorage.getItem('locale') || 'en';
 
   const hasLayer3 = entitlements?.features?.includes('LAYER3_UI');
 
@@ -21,24 +21,18 @@ export default function AppsPage() {
       .catch(() => setError('Could not load applications'));
   }, []);
 
-  function logout() {
-    clearSession();
-    navigate('/login');
-  }
-
   return (
-    <div className="page">
-      <header className="topbar">
-        <h1>Applications</h1>
-        <div className="topbar-actions">
-          <span className="badge">{entitlements?.planCode || 'FREE'}</span>
-          <button type="button" className="btn ghost" onClick={logout}>Logout</button>
-        </div>
-      </header>
+    <div className="page-inner">
+      <div className="page-head">
+        <h2>{locale === 'hi' ? 'एप्लिकेशन' : 'Applications'}</h2>
+        <span className="badge">{entitlements?.planCode || 'FREE'}</span>
+      </div>
 
       {!hasLayer3 && (
         <div className="banner upgrade">
-          Free plan: 2-layer UI. Upgrade to <strong>Pro</strong> for chapter menus and unlimited crop scans.
+          {locale === 'hi'
+            ? 'फ्री प्लान: ऐप सूची। प्रो में अध्याय मेनू और असीमित फसल स्कैन।'
+            : 'Free plan: app list only. Pro unlocks chapter menus and unlimited crop scans.'}
         </div>
       )}
 
@@ -50,13 +44,12 @@ export default function AppsPage() {
             className={`app-card ${!hasLayer3 ? 'disabled' : ''}`}
             onClick={(e) => { if (!hasLayer3) e.preventDefault(); }}
           >
-            <h3>{app.titleHi || app.titleEn}</h3>
+            <h3>{locale === 'hi' ? (app.titleHi || app.titleEn) : app.titleEn}</h3>
             <p>{app.descriptionEn}</p>
           </Link>
         ))}
       </div>
 
-      <Link to="/chatbot" className="fab">Crop AI</Link>
       {error && <p className="error">{error}</p>}
     </div>
   );

@@ -117,7 +117,7 @@ services:
       CATALOG_SERVICE_URL: http://catalog-service:8083
       I18N_SERVICE_URL: http://i18n-service:8084
       CHATBOT_SERVICE_URL: http://chatbot-service:8085
-      CORS_ORIGINS: http://localhost:5173
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
       DD_SERVICE: farmeasy-gateway
       DD_ENV: ${DD_ENV:-local}
     depends_on:
@@ -128,6 +128,17 @@ services:
       - chatbot-service
     ports:
       - "8080:8080"
+
+  # Farmer web application (React PWA + nginx)
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: farmeasy-web
+    depends_on:
+      - gateway
+    ports:
+      - "3000:80"
 
   # Optional: Datadog Agent (set DD_API_KEY in .env)
   datadog-agent:

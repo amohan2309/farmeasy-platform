@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 REPO_NAME="${1:-farmeasy-platform}"
-VISIBILITY="${2:-private}"
+VISIBILITY="${2:-public}"
 
 if ! command -v gh >/dev/null; then
   echo "Install GitHub CLI: brew install gh"

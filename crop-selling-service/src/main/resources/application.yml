@@ -1,0 +1,20 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: crop-selling-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/FarmEasy}
+    username: ${SPRING_DATASOURCE_USERNAME:anandmohan}
+    password: ${SPRING_DATASOURCE_PASSWORD:FarmEasy}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: crop_selling
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

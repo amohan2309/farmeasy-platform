@@ -1,6 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebAppLayout from './layout/WebAppLayout';
 import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
+import MarketplacePage from './pages/MarketplacePage';
+import MarketTradePage from './pages/MarketTradePage';
+import SmartChipPage from './pages/SmartChipPage';
+import IrrigationPage from './pages/IrrigationPage';
 import AppsPage from './pages/AppsPage';
 import AppMenuPage from './pages/AppMenuPage';
 import ChatbotPage from './pages/ChatbotPage';
@@ -21,11 +26,18 @@ export default function App() {
           </PrivateRoute>
         }
       >
-        <Route path="/apps" element={<AppsPage />} />
-        <Route path="/apps/:appId" element={<AppMenuPage />} />
-        <Route path="/chatbot" element={<ChatbotPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/market" element={<MarketTradePage />} />
+        <Route path="/smart-chip" element={<SmartChipPage />} />
+        <Route path="/irrigation" element={<IrrigationPage />} />
+        <Route path="/learn" element={<AppsPage />} />
+        <Route path="/learn/:appId" element={<AppMenuPage />} />
+        <Route path="/assistant" element={<ChatbotPage />} />
+        <Route path="/apps" element={<Navigate to="/learn" replace />} />
+        <Route path="/apps/:appId" element={<Navigate to="/learn" replace />} />
+        <Route path="/chatbot" element={<Navigate to="/assistant" replace />} />
       </Route>
-      <Route path="/" element={<Navigate to="/apps" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

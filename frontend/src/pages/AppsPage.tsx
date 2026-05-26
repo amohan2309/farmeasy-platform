@@ -40,7 +40,7 @@ export default function AppsPage() {
         {apps.map((app) => (
           <Link
             key={app.id}
-            to={hasLayer3 ? `/apps/${app.id}` : '#'}
+            to={hasLayer3 ? `/learn/${app.id}` : '#'}
             className={`app-card ${!hasLayer3 ? 'disabled' : ''}`}
             onClick={(e) => { if (!hasLayer3) e.preventDefault(); }}
           >

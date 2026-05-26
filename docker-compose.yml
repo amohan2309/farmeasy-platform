@@ -107,6 +107,123 @@ services:
     ports:
       - "8085:8085"
 
+  marketplace-service:
+    build:
+      context: ./marketplace-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: marketplace-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8086:8086"
+
+  weather-service:
+    build:
+      context: ./weather-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: weather-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8087:8087"
+
+  irrigation-service:
+    build:
+      context: ./irrigation-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: irrigation-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8088:8088"
+
+  iot-integration-service:
+    build:
+      context: ./iot-integration-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: iot-integration-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8089:8089"
+
+  crop-selling-service:
+    build:
+      context: ./crop-selling-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: crop-selling-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8090:8090"
+
+  live-prices-service:
+    build:
+      context: ./live-prices-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: live-prices-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8091:8091"
+
+  dashboard-service:
+    build:
+      context: ./dashboard-service
+      dockerfile: Dockerfile
+    environment:
+      MARKETPLACE_SERVICE_URL: http://marketplace-service:8086
+      WEATHER_SERVICE_URL: http://weather-service:8087
+      IOT_SERVICE_URL: http://iot-integration-service:8089
+      PRICES_SERVICE_URL: http://live-prices-service:8091
+      CROP_SELLING_SERVICE_URL: http://crop-selling-service:8090
+      DD_SERVICE: dashboard-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      - marketplace-service
+      - weather-service
+      - iot-integration-service
+      - live-prices-service
+      - crop-selling-service
+    ports:
+      - "8092:8092"
+
   gateway:
     build:
       context: ./gateway
@@ -117,6 +234,13 @@ services:
       CATALOG_SERVICE_URL: http://catalog-service:8083
       I18N_SERVICE_URL: http://i18n-service:8084
       CHATBOT_SERVICE_URL: http://chatbot-service:8085
+      MARKETPLACE_SERVICE_URL: http://marketplace-service:8086
+      WEATHER_SERVICE_URL: http://weather-service:8087
+      IRRIGATION_SERVICE_URL: http://irrigation-service:8088
+      IOT_SERVICE_URL: http://iot-integration-service:8089
+      CROP_SELLING_SERVICE_URL: http://crop-selling-service:8090
+      LIVE_PRICES_SERVICE_URL: http://live-prices-service:8091
+      DASHBOARD_SERVICE_URL: http://dashboard-service:8092
       CORS_ORIGINS: http://localhost:5173,http://localhost:3000
       DD_SERVICE: farmeasy-gateway
       DD_ENV: ${DD_ENV:-local}
@@ -126,6 +250,13 @@ services:
       - catalog-service
       - i18n-service
       - chatbot-service
+      - marketplace-service
+      - weather-service
+      - irrigation-service
+      - iot-integration-service
+      - crop-selling-service
+      - live-prices-service
+      - dashboard-service
     ports:
       - "8080:8080"
 

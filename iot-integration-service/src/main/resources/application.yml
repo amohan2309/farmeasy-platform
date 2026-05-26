@@ -1,0 +1,22 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: iot-integration-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/FarmEasy}
+    username: ${SPRING_DATASOURCE_USERNAME:anandmohan}
+    password: ${SPRING_DATASOURCE_PASSWORD:FarmEasy}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: iot
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

@@ -1,0 +1,16 @@
+server:
+  port: 8092
+spring:
+  application:
+    name: dashboard-service
+farmeasy:
+  marketplace-url: ${MARKETPLACE_SERVICE_URL:http://localhost:8086}
+  weather-url: ${WEATHER_SERVICE_URL:http://localhost:8087}
+  iot-url: ${IOT_SERVICE_URL:http://localhost:8089}
+  prices-url: ${PRICES_SERVICE_URL:http://localhost:8091}
+  crop-selling-url: ${CROP_SELLING_SERVICE_URL:http://localhost:8090}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

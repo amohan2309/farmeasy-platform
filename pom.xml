@@ -26,6 +26,13 @@
         <module>catalog-service</module>
         <module>i18n-service</module>
         <module>chatbot-service</module>
+        <module>marketplace-service</module>
+        <module>weather-service</module>
+        <module>irrigation-service</module>
+        <module>iot-integration-service</module>
+        <module>crop-selling-service</module>
+        <module>live-prices-service</module>
+        <module>dashboard-service</module>
     </modules>
 
     <properties>

@@ -21,6 +21,22 @@ function authHeaders(): HeadersInit {
   return headers;
 }
 
+async function apiGet<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, { headers: authHeaders() });
+  if (!res.ok) throw new Error(`Request failed: ${path}`);
+  return res.json();
+}
+
+async function apiPost<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`Request failed: ${path}`);
+  return res.json();
+}
+
 export async function loginWithPassword(usernameOrEmail: string, password: string) {
   const res = await fetch(`${API_BASE}/api/auth/login`, {
     method: 'POST',
@@ -50,31 +66,85 @@ export async function verifyPhoneOtp(phoneNumber: string, otpCode: string) {
 }
 
 export async function getEntitlements(): Promise<Entitlements> {
-  const res = await fetch(`${API_BASE}/api/entitlements/me`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Failed to load entitlements');
-  return res.json();
+  return apiGet('/api/entitlements/me');
+}
+
+export async function getDashboardHome() {
+  return apiGet<Record<string, unknown>>('/api/dashboard/home');
+}
+
+export async function listMarketplaceProducts(category?: string) {
+  const q = category ? `?category=${category}` : '';
+  return apiGet(`/api/marketplace/products${q}`);
+}
+
+export async function bookEquipment(productId: string, bookingDate: string) {
+  const userId = localStorage.getItem('userId');
+  return apiPost('/api/marketplace/equipment/bookings', {
+    userId,
+    productId,
+    bookingDate,
+  });
+}
+
+export async function getWeatherForecast(region = 'Punjab') {
+  return apiGet(`/api/weather/forecast?region=${encodeURIComponent(region)}`);
+}
+
+export async function getWeatherAlerts(region = 'Punjab') {
+  return apiGet(`/api/weather/alerts?region=${encodeURIComponent(region)}`);
+}
+
+export async function getIrrigationSchedules() {
+  return apiGet('/api/irrigation/schedules');
+}
+
+export async function controlPump(action: 'on' | 'off') {
+  return apiPost(`/api/irrigation/pump/${action}`, {});
+}
+
+export async function getWaterUsage() {
+  return apiGet('/api/irrigation/water-usage');
+}
+
+export async function getIotDevices() {
+  return apiGet('/api/iot/devices');
+}
+
+export async function getIotStatus(chipId: string) {
+  return apiGet(`/api/iot/devices/${chipId}/status`);
+}
+
+export async function getIotReadings(chipId: string) {
+  return apiGet(`/api/iot/devices/${chipId}/readings`);
+}
+
+export async function getCropListings() {
+  return apiGet('/api/crop-selling/listings');
+}
+
+export async function createCropListing(listing: Record<string, unknown>) {
+  return apiPost('/api/crop-selling/listings', listing);
+}
+
+export async function getMandiPrices() {
+  return apiGet('/api/prices/mandi');
 }
 
 export async function listApps() {
-  const res = await fetch(`${API_BASE}/api/apps?locale=hi`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Failed to load apps');
-  return res.json();
+  return apiGet('/api/apps?locale=hi');
 }
 
 export async function listChapters(appId: string) {
-  const res = await fetch(`${API_BASE}/api/content/apps/${appId}/chapters`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Failed to load chapters');
-  return res.json();
+  return apiGet(`/api/content/apps/${appId}/chapters`);
 }
 
 export async function listTopics(chapterId: string) {
-  const res = await fetch(`${API_BASE}/api/content/chapters/${chapterId}/topics`, { headers: authHeaders() });
-  return res.json();
+  return apiGet(`/api/content/chapters/${chapterId}/topics`);
 }
 
 export async function listSubtopics(topicId: string) {
-  const res = await fetch(`${API_BASE}/api/content/topics/${topicId}/subtopics`, { headers: authHeaders() });
-  return res.json();
+  return apiGet(`/api/content/topics/${topicId}/subtopics`);
 }
 
 export async function detectLocale(lat: number, lng: number) {
@@ -109,4 +179,8 @@ export function clearSession() {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('userId');
+}
+
+export function t(en: string, hi: string) {
+  return (localStorage.getItem('locale') || 'en') === 'hi' ? hi : en;
 }

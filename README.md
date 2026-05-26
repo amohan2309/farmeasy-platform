@@ -1,26 +1,41 @@
-# FarmEasy Platform
+# Farm Easy Platform
 
-Indian farmer super-app: Java 21 microservices, PostgreSQL, Redis, API Gateway, **React web application (PWA)**, Datadog-ready logging.
+**Farm Easy** is a digital-first agricultural ecosystem for Indian farmers: **Farm Easy Portal** (app/web) + **Farm Easy Smart Chip** (IoT). This repository delivers the MVP backend (Java microservices), API gateway, PostgreSQL, Redis, and a farmer-facing **React PWA**.
+
+## Products
+
+| Product | Description |
+|---------|-------------|
+| **Farm Easy Portal** | Marketplace, mandi prices, crop selling, irrigation, dashboard, AI assistant, learning content |
+| **Farm Easy Smart Chip** | IoT integration service — soil sensors, pump control, wireless sync to portal |
 
 ## Architecture
 
 | Service | Port | Purpose |
 |---------|------|---------|
 | gateway | 8080 | API routing, CORS |
-| authentication | 8081 | Login, JWT, OTP, users |
-| subscription-service | 8082 | Plans, entitlements, usage quotas |
-| catalog-service | 8083 | Apps, chapters, topics, subtopics |
-| i18n-service | 8084 | Locale detection, UI messages |
-| chatbot-service | 8085 | Crop image analysis (LLM-ready) |
+| authentication | 8081 | Login, JWT, OTP |
+| subscription-service | 8082 | Plans, entitlements |
+| catalog-service | 8083 | Learning apps & gov schemes content |
+| i18n-service | 8084 | Locale detection |
+| chatbot-service | 8085 | AI crop analysis |
+| marketplace-service | 8086 | Seeds, fertilizer, equipment |
+| weather-service | 8087 | Forecasts & alerts |
+| irrigation-service | 8088 | Schedules, pump control, water usage |
+| iot-integration-service | 8089 | Smart Chip devices & sensor readings |
+| crop-selling-service | 8090 | Direct crop listings & orders |
+| live-prices-service | 8091 | Live mandi prices |
+| dashboard-service | 8092 | Aggregated farmer home dashboard |
 
-## Quick start (local)
+## Quick start
 
 ### Prerequisites
+
 - Java 21, Maven 3.9+
 - Docker & Docker Compose
-- Node 20+ (for frontend)
+- Node 20+ (frontend dev)
 
-### Backend
+### Full stack (Docker)
 
 ```bash
 cd FarmEasy_backend
@@ -28,57 +43,47 @@ mvn clean package -DskipTests
 docker compose up --build
 ```
 
-API gateway: http://localhost:8080  
-Swagger (auth): http://localhost:8081/swagger-ui.html
+| URL | Service |
+|-----|---------|
+| http://localhost:3000 | Web app (PWA) |
+| http://localhost:8080 | API gateway |
 
-### Web application (frontend)
-
-Works in **desktop and mobile browsers**, installable as a **PWA**.
+### Frontend only (dev)
 
 ```bash
 cd frontend
 npm install
-npm run dev          # dev: http://localhost:5173
-npm run build        # production static build → dist/
-npm run preview      # preview build: http://localhost:3000
+npm run dev   # http://localhost:5173 — proxy VITE_API_URL=http://localhost:8080
 ```
-
-**Docker (full stack including web UI):**
-
-```bash
-docker compose up --build
-# Web app: http://localhost:3000
-# API gateway: http://localhost:8080
-```
-
-See [docs/WEB_APPLICATION.md](docs/WEB_APPLICATION.md) for deployment to Cloudflare Pages / Vercel.
 
 ### Test phone login
-1. Send OTP: `POST /api/auth/phone/send-otp` with `{"phoneNumber":"9876543210"}`
-2. Read OTP from Redis: `docker exec -it farmeasy-redis redis-cli GET otp:phone:9876543210`
-3. Verify: `POST /api/auth/phone/verify` with phone + OTP
 
-### Upgrade user to Pro (unlock Layer 3 UI)
+1. `POST /api/auth/phone/send-otp` with `{"phoneNumber":"9876543210"}`
+2. OTP from Redis: `docker exec -it farmeasy-redis redis-cli GET otp:phone:9876543210`
+3. `POST /api/auth/phone/verify` with phone + OTP
 
-```bash
-curl -X PUT http://localhost:8080/api/subscriptions/users/{userId}/plan \
-  -H "Content-Type: application/json" \
-  -d '{"planCode":"PRO"}'
-```
+### Smart Chip demo
 
-## Datadog
+- Device ID: `FE-CHIP-001`
+- Status: `GET /api/iot/devices/FE-CHIP-001/status`
 
-See [docs/DATADOG.md](docs/DATADOG.md). Enable agent:
+## Portal modules (web)
 
-```bash
-cp .env.example .env   # set DD_API_KEY
-docker compose --profile observability up -d
-```
+- **Home** — profit summary, journey, quick stats
+- **Shop** — seeds, inputs, equipment hire
+- **Sell** — mandi prices & crop listings
+- **Smart Chip** — live soil moisture, NPK, temperature
+- **Water** — irrigation schedules, pump on/off
+- **Learn** — schemes & training content
+- **AI** — crop image analysis
 
-## Cloud deployment (cost-effective)
+## Documentation
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Recommended for MVP: **Fly.io** or **Railway** (low idle cost, Docker-native).
+- [Product design prompt](docs/PRODUCT_DESIGN_PROMPT.md)
+- [Web application](docs/WEB_APPLICATION.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Datadog](docs/DATADOG.md)
 
-## Design specification
+## License
 
-See [docs/PRODUCT_DESIGN_PROMPT.md](docs/PRODUCT_DESIGN_PROMPT.md).
+Proprietary — Farm Easy.

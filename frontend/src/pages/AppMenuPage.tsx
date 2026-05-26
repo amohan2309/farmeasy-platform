@@ -36,7 +36,7 @@ export default function AppMenuPage() {
 
   return (
     <div className="page-inner">
-      <Link to="/apps" className="back">← {t('Applications', 'ऐप्स')}</Link>
+      <Link to="/learn" className="back">← {locale === 'hi' ? 'सीखें' : 'Learn'}</Link>
       <h2>{t('Menu', 'मेनू')}</h2>
 
       <section>

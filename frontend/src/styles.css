@@ -221,3 +221,46 @@ input, select { padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; fo
 .hint, .muted, .disclaimer { font-size: 0.85rem; color: #666; }
 .back { color: var(--green); text-decoration: none; display: inline-block; margin-bottom: 0.5rem; }
 .report h3 { margin-top: 0; }
+
+.page h2 { margin: 0 0 0.25rem; color: var(--green); }
+.stat-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1rem 0;
+}
+@media (min-width: 600px) {
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.stat .stat-label { font-size: 0.8rem; color: #666; display: block; }
+.stat strong { font-size: 1.25rem; color: var(--green); }
+.stat small { font-size: 0.75rem; color: #888; }
+
+.product-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.product-card .price { font-weight: 700; color: var(--green); margin: 0; }
+.nav-icon { margin-right: 0.35rem; }
+.sidebar nav a { display: flex; align-items: center; }
+
+.journey-list { margin: 0; padding-left: 1.25rem; line-height: 1.8; }
+.price-list, .listing-list { list-style: none; padding: 0; margin: 0; }
+.price-list li, .listing-list li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #eee;
+}
+.trend { font-size: 0.75rem; margin-left: 0.5rem; padding: 0.15rem 0.4rem; border-radius: 4px; }
+.trend-up { background: #d8f3dc; color: #1b4332; }
+.trend-down { background: #ffe5e5; color: #c1121f; }
+.trend-stable { background: #e9ecef; }
+.chip-status code { background: #f0f0f0; padding: 0.15rem 0.4rem; border-radius: 4px; }
+.badge.online { background: #40916c; color: #fff; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 6px; }
+.alert-banner { background: #fff3cd; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; }
+.pump-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.success { color: var(--green-light); font-weight: 600; }
+.bottom-nav .nav-icon { display: block; font-size: 1.1rem; }

@@ -1,0 +1,148 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: farmeasy-db
+    environment:
+      POSTGRES_DB: FarmEasy
+      POSTGRES_USER: anandmohan
+      POSTGRES_PASSWORD: FarmEasy
+    volumes:
+      - farmeasy-db-data:/var/lib/postgresql/data
+      - ./docker/init-schemas.sql:/docker-entrypoint-initdb.d/01-init-schemas.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U anandmohan -d FarmEasy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: farmeasy-redis
+    ports:
+      - "6379:6379"
+
+  authentication:
+    build:
+      context: ./authentication
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      REDIS_HOST: redis
+      JWT_SECRET: ${JWT_SECRET:-FarmEasySecretKeyChangeInProductionUse256BitsMinimum!!}
+      DD_SERVICE: authentication-service
+      DD_ENV: ${DD_ENV:-local}
+      DD_LOGS_INJECTION: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8081:8081"
+
+  subscription-service:
+    build:
+      context: ./subscription-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      REDIS_HOST: redis
+      DD_SERVICE: subscription-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8082:8082"
+
+  catalog-service:
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      DD_SERVICE: catalog-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+
+  i18n-service:
+    build:
+      context: ./i18n-service
+      dockerfile: Dockerfile
+    environment:
+      REDIS_HOST: redis
+      DD_SERVICE: i18n-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      - redis
+    ports:
+      - "8084:8084"
+
+  chatbot-service:
+    build:
+      context: ./chatbot-service
+      dockerfile: Dockerfile
+    environment:
+      SUBSCRIPTION_SERVICE_URL: http://subscription-service:8082
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DD_SERVICE: chatbot-service
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      - subscription-service
+    ports:
+      - "8085:8085"
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    environment:
+      AUTH_SERVICE_URL: http://authentication:8081
+      SUBSCRIPTION_SERVICE_URL: http://subscription-service:8082
+      CATALOG_SERVICE_URL: http://catalog-service:8083
+      I18N_SERVICE_URL: http://i18n-service:8084
+      CHATBOT_SERVICE_URL: http://chatbot-service:8085
+      CORS_ORIGINS: http://localhost:5173
+      DD_SERVICE: farmeasy-gateway
+      DD_ENV: ${DD_ENV:-local}
+    depends_on:
+      - authentication
+      - subscription-service
+      - catalog-service
+      - i18n-service
+      - chatbot-service
+    ports:
+      - "8080:8080"
+
+  # Optional: Datadog Agent (set DD_API_KEY in .env)
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:7
+    profiles: ["observability"]
+    environment:
+      DD_API_KEY: ${DD_API_KEY}
+      DD_SITE: ${DD_SITE:-datadoghq.com}
+      DD_APM_ENABLED: "true"
+      DD_LOGS_ENABLED: "true"
+      DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
+volumes:
+  farmeasy-db-data:

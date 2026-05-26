@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: authentication-db
+    restart: always
+    environment:
+      POSTGRES_DB: FarmEasy
+      POSTGRES_USER: anandmohan
+      POSTGRES_PASSWORD: FarmEasy
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    # Use explicit defaults in the healthcheck to avoid compose warnings when environment
+    # variables are not provided in the shell that runs docker-compose.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U anandmohan -d FarmEasy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: com.farmeasy.authentication:latest
+    container_name: authentication-app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/FarmEasy
+      SPRING_DATASOURCE_USERNAME: anandmohan
+      SPRING_DATASOURCE_PASSWORD: FarmEasy
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    restart: unless-stopped
+
+volumes:
+  db-data: {}

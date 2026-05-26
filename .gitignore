@@ -1,0 +1,32 @@
+# Build
+**/target/
+**/build/
+*.jar
+!**/src/**
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# Env & secrets
+.env
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Eclipse workspace (not part of app)
+../FarmEasyWorkSpace/

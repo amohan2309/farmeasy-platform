@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: farmeasy-gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "${CORS_ORIGINS:http://localhost:5173}"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: authentication
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/auth/**,/api/users/**,/api/roles/**,/api/otp/**,/api/password-reset/**,/api/devices/**,/api/audit/**
+        - id: subscription
+          uri: ${SUBSCRIPTION_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/subscriptions/**,/api/entitlements/**,/api/usage/**
+        - id: catalog
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/apps/**,/api/content/**
+        - id: i18n
+          uri: ${I18N_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/i18n/**
+        - id: chatbot
+          uri: ${CHATBOT_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/chatbot/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO
+    com.farmeasy: DEBUG

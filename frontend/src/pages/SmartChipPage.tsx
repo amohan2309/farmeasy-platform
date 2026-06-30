@@ -1,22 +1,19 @@
 import { useEffect, useState } from 'react';
-import { getIotDevices, getIotReadings, getIotStatus, t } from '../api/client';
+import { getIotDevices, getIotReadings, getIotStatus, t, type IotDeviceStatus, type IotReading } from '../api/client';
 
 const DEMO_CHIP = 'FE-CHIP-001';
 
 export default function SmartChipPage() {
-  const [status, setStatus] = useState<Record<string, unknown> | null>(null);
-  const [readings, setReadings] = useState<Record<string, unknown>[]>([]);
+  const [status, setStatus] = useState<IotDeviceStatus | null>(null);
+  const [readings, setReadings] = useState<IotReading[]>([]);
 
   useEffect(() => {
     getIotDevices()
-      .then((devices: unknown) => {
-        const list = devices as { chipId: string }[];
-        const chip = list[0]?.chipId ?? DEMO_CHIP;
-        return Promise.all([getIotStatus(chip), getIotReadings(chip)]);
-      })
-      .then(([s, r]) => {
-        setStatus(s as Record<string, unknown>);
-        setReadings(r as Record<string, unknown>[]);
+      .then(async (devices) => {
+        const chip = devices[0]?.chipId ?? DEMO_CHIP;
+        const [s, r] = await Promise.all([getIotStatus(chip), getIotReadings(chip)]);
+        setStatus(s);
+        setReadings(r);
       })
       .catch(() => {});
   }, []);

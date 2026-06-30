@@ -40,6 +40,8 @@
         <spring-cloud.version>2024.0.1</spring-cloud.version>
         <jjwt.version>0.12.6</jjwt.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <lombok.version>1.18.40</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -74,7 +76,35 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
     <build>
+        <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <fork>true</fork>
+                        <executable>${env.JAVA_HOME}/bin/javac</executable>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>

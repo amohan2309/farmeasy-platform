@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { controlPump, getIrrigationSchedules, getWaterUsage, getWeatherAlerts, t } from '../api/client';
+import { controlPump, getIrrigationSchedules, getWaterUsage, getWeatherAlerts, t, type IrrigationSchedule, type WaterUsage, type WeatherAlert } from '../api/client';
 
 export default function IrrigationPage() {
-  const [schedules, setSchedules] = useState<Record<string, unknown>[]>([]);
-  const [usage, setUsage] = useState<Record<string, unknown> | null>(null);
-  const [alerts, setAlerts] = useState<Record<string, unknown>[]>([]);
+  const [schedules, setSchedules] = useState<IrrigationSchedule[]>([]);
+  const [usage, setUsage] = useState<WaterUsage | null>(null);
+  const [alerts, setAlerts] = useState<WeatherAlert[]>([]);
   const [pumpMsg, setPumpMsg] = useState('');
 
   useEffect(() => {
     Promise.all([getIrrigationSchedules(), getWaterUsage(), getWeatherAlerts()])
       .then(([s, u, a]) => {
-        setSchedules(s as Record<string, unknown>[]);
-        setUsage(u as Record<string, unknown>);
-        setAlerts(a as Record<string, unknown>[]);
+        setSchedules(s);
+        setUsage(u);
+        setAlerts(a);
       })
       .catch(() => {});
   }, []);

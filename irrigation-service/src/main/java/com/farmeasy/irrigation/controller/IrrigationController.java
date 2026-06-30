@@ -16,8 +16,12 @@ public class IrrigationController {
     private final IrrigationScheduleRepository scheduleRepo;
 
     @GetMapping("/schedules")
-    public List<IrrigationSchedule> schedules(@RequestHeader("X-User-Id") UUID userId) {
-        return scheduleRepo.findByUserIdOrderByStartTimeAsc(userId);
+    public List<IrrigationSchedule> schedules(
+            @RequestHeader(value = "X-User-Id", required = false) UUID userId) {
+        UUID effectiveUserId = userId != null
+                ? userId
+                : UUID.fromString("00000000-0000-0000-0000-000000000001");
+        return scheduleRepo.findByUserIdOrderByStartTimeAsc(effectiveUserId);
     }
 
     @PostMapping("/schedules")

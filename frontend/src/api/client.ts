@@ -12,6 +12,74 @@ export type Entitlements = {
   limits: Record<string, number>;
 };
 
+export type FarmApp = {
+  id: string;
+  code: string;
+  titleEn: string;
+  titleHi: string;
+  descriptionEn: string;
+};
+
+export type ContentChapter = {
+  id: string;
+  titleEn: string;
+  titleHi: string;
+};
+
+export type ContentTopic = {
+  id: string;
+  titleEn: string;
+  titleHi: string;
+};
+
+export type ContentSubtopic = {
+  id: string;
+  titleEn: string;
+  titleHi: string;
+  contentType: string;
+};
+
+export type MarketplaceProduct = {
+  id: string;
+  category: string;
+  nameEn: string;
+  nameHi?: string;
+  priceInr: number;
+  unit: string;
+  supplier?: string;
+};
+
+export type WeatherAlert = {
+  alertMessage?: string;
+};
+
+export type IrrigationSchedule = {
+  id: string;
+  cropType?: string;
+  startTime?: string;
+  durationMinutes?: number;
+  autoMode?: boolean;
+};
+
+export type WaterUsage = {
+  todayLiters?: number;
+  savedPercent?: number;
+};
+
+export type IotDevice = {
+  chipId: string;
+};
+
+export type IotDeviceStatus = {
+  farmName?: string;
+  chipId?: string;
+  status?: string;
+  solarPowered?: boolean;
+  latestReading?: Record<string, unknown>;
+};
+
+export type IotReading = Record<string, unknown>;
+
 function authHeaders(): HeadersInit {
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
@@ -73,9 +141,9 @@ export async function getDashboardHome() {
   return apiGet<Record<string, unknown>>('/api/dashboard/home');
 }
 
-export async function listMarketplaceProducts(category?: string) {
+export async function listMarketplaceProducts(category?: string): Promise<MarketplaceProduct[]> {
   const q = category ? `?category=${category}` : '';
-  return apiGet(`/api/marketplace/products${q}`);
+  return apiGet<MarketplaceProduct[]>(`/api/marketplace/products${q}`);
 }
 
 export async function bookEquipment(productId: string, bookingDate: string) {
@@ -91,32 +159,32 @@ export async function getWeatherForecast(region = 'Punjab') {
   return apiGet(`/api/weather/forecast?region=${encodeURIComponent(region)}`);
 }
 
-export async function getWeatherAlerts(region = 'Punjab') {
-  return apiGet(`/api/weather/alerts?region=${encodeURIComponent(region)}`);
+export async function getWeatherAlerts(region = 'Punjab'): Promise<WeatherAlert[]> {
+  return apiGet<WeatherAlert[]>(`/api/weather/alerts?region=${encodeURIComponent(region)}`);
 }
 
-export async function getIrrigationSchedules() {
-  return apiGet('/api/irrigation/schedules');
+export async function getIrrigationSchedules(): Promise<IrrigationSchedule[]> {
+  return apiGet<IrrigationSchedule[]>('/api/irrigation/schedules');
 }
 
 export async function controlPump(action: 'on' | 'off') {
   return apiPost(`/api/irrigation/pump/${action}`, {});
 }
 
-export async function getWaterUsage() {
-  return apiGet('/api/irrigation/water-usage');
+export async function getWaterUsage(): Promise<WaterUsage> {
+  return apiGet<WaterUsage>('/api/irrigation/water-usage');
 }
 
-export async function getIotDevices() {
-  return apiGet('/api/iot/devices');
+export async function getIotDevices(): Promise<IotDevice[]> {
+  return apiGet<IotDevice[]>('/api/iot/devices');
 }
 
-export async function getIotStatus(chipId: string) {
-  return apiGet(`/api/iot/devices/${chipId}/status`);
+export async function getIotStatus(chipId: string): Promise<IotDeviceStatus> {
+  return apiGet<IotDeviceStatus>(`/api/iot/devices/${chipId}/status`);
 }
 
-export async function getIotReadings(chipId: string) {
-  return apiGet(`/api/iot/devices/${chipId}/readings`);
+export async function getIotReadings(chipId: string): Promise<IotReading[]> {
+  return apiGet<IotReading[]>(`/api/iot/devices/${chipId}/readings`);
 }
 
 export async function getCropListings() {
@@ -131,20 +199,20 @@ export async function getMandiPrices() {
   return apiGet('/api/prices/mandi');
 }
 
-export async function listApps() {
-  return apiGet('/api/apps?locale=hi');
+export async function listApps(): Promise<FarmApp[]> {
+  return apiGet<FarmApp[]>('/api/apps?locale=hi');
 }
 
-export async function listChapters(appId: string) {
-  return apiGet(`/api/content/apps/${appId}/chapters`);
+export async function listChapters(appId: string): Promise<ContentChapter[]> {
+  return apiGet<ContentChapter[]>(`/api/content/apps/${appId}/chapters`);
 }
 
-export async function listTopics(chapterId: string) {
-  return apiGet(`/api/content/chapters/${chapterId}/topics`);
+export async function listTopics(chapterId: string): Promise<ContentTopic[]> {
+  return apiGet<ContentTopic[]>(`/api/content/chapters/${chapterId}/topics`);
 }
 
-export async function listSubtopics(topicId: string) {
-  return apiGet(`/api/content/topics/${topicId}/subtopics`);
+export async function listSubtopics(topicId: string): Promise<ContentSubtopic[]> {
+  return apiGet<ContentSubtopic[]>(`/api/content/topics/${topicId}/subtopics`);
 }
 
 export async function detectLocale(lat: number, lng: number) {

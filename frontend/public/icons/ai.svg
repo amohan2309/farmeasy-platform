@@ -1,0 +1,16 @@
+<!-- Crop AI: phone camera scanning a leaf -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Photo crop check">
+  <rect width="120" height="120" rx="26" fill="#2d6a4f"/>
+  <!-- big leaf (crop) -->
+  <path fill="#52b788" d="M24 78c0-28 16-48 36-52 20 4 36 24 36 52 0 8-4 14-10 18-8 6-20 8-26 8s-18-2-26-8c-6-4-10-10-10-18z"/>
+  <path fill="none" stroke="#40916c" stroke-width="2" d="M60 26v68"/>
+  <path fill="none" stroke="#40916c" stroke-width="1.5" d="M60 40c-12 6-20 16-22 28M60 40c12 6 20 16 22 28"/>
+  <!-- phone with camera -->
+  <rect x="62" y="22" width="36" height="56" rx="6" fill="#343a40"/>
+  <rect x="66" y="28" width="28" height="38" rx="3" fill="#74c69d"/>
+  <!-- camera lens -->
+  <circle cx="80" cy="68" r="7" fill="#212529"/>
+  <circle cx="80" cy="68" r="4" fill="#4cc9f0"/>
+  <!-- viewfinder corners -->
+  <path fill="none" stroke="#fff" stroke-width="2.5" d="M68 32h10v10M88 32h-10v10M68 62h10v-10M88 62h-10v-10"/>
+</svg>

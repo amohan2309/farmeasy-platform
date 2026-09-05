@@ -1,0 +1,15 @@
+<!-- Buy seeds & tools: open sack of grain -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Buy seeds">
+  <rect width="120" height="120" rx="26" fill="#2d6a4f"/>
+  <!-- jute sack -->
+  <path fill="#c9a227" d="M35 38c0-6 8-12 25-12s25 6 25 12v52H35V38z"/>
+  <path fill="#a67c00" d="M35 38c8-4 17-6 25-6s17 2 25 6v8H35v-8z"/>
+  <ellipse cx="60" cy="72" rx="22" ry="14" fill="#f4d03f"/>
+  <!-- wheat grains in sack -->
+  <ellipse cx="48" cy="68" rx="4" ry="6" fill="#e8b923" transform="rotate(-20 48 68)"/>
+  <ellipse cx="60" cy="66" rx="4" ry="6" fill="#e8b923"/>
+  <ellipse cx="72" cy="68" rx="4" ry="6" fill="#e8b923" transform="rotate(20 72 68)"/>
+  <!-- seedling on top = buy for farming -->
+  <path fill="#52b788" d="M60 26c-6 8-10 14-10 20h20c0-6-4-12-10-20z"/>
+  <path fill="#40916c" d="M58 46h4v8h-4z"/>
+</svg>

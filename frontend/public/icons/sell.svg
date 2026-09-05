@@ -1,0 +1,12 @@
+<!-- Sell crop at mandi: wheat bundle + rupee -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Sell crop">
+  <rect width="120" height="120" rx="26" fill="#e76f51"/>
+  <!-- wheat bundle -->
+  <path fill="#f4d03f" d="M28 88V52c0-4 4-8 8-8h20l4-16h20l4 16h8c4 0 8 4 8 8v36H28z"/>
+  <path fill="#e8b923" d="M44 36c0-8 4-14 8-18 4 4 8 10 8 18v4H44v-4z"/>
+  <path fill="#e8b923" d="M60 32c0-10 5-18 10-22 5 4 10 12 10 22v8H60V32z"/>
+  <path fill="#e8b923" d="M76 36c0-8 4-14 8-18 4 4 8 10 8 18v4H76v-4z"/>
+  <!-- big rupee coin -->
+  <circle cx="88" cy="72" r="22" fill="#ffd166" stroke="#c9a227" stroke-width="3"/>
+  <text x="88" y="80" text-anchor="middle" font-size="26" font-weight="800" fill="#8b5a00" font-family="system-ui,sans-serif">?</text>
+</svg>

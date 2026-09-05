@@ -8,6 +8,7 @@ import com.farmeasy.authentication.repository.UserRepository;
 import com.farmeasy.authentication.util.JwtUtil;
 import com.farmeasy.authentication.util.OtpUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,14 @@ public class PhoneOtpAuthService {
     private final OtpUtil otpUtil;
     private final JwtUtil jwtUtil;
 
+    @Value("${farmeasy.auth.dev-phone:9876543210}")
+    private String devPhone;
+
+    @Value("${farmeasy.auth.dev-otp:123456}")
+    private String devOtp;
+
     public void sendOtp(String phoneNumber) {
-        String otp = otpUtil.generateOtp();
+        String otp = devPhone.equals(phoneNumber) ? devOtp : otpUtil.generateOtp();
         redis.opsForValue().set(otpKey(phoneNumber), otp, Duration.ofMinutes(5));
     }
 

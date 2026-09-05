@@ -56,7 +56,14 @@ npm install
 npm run dev   # http://localhost:5173 — proxy VITE_API_URL=http://localhost:8080
 ```
 
-### Test phone login
+### Test login (local dev)
+
+| Method | Credential |
+|--------|------------|
+| **Password** | Username: `demo` · Password: `FarmEasy123` |
+| **Mobile OTP** | Phone: `9876543210` · OTP: `123456` (fixed in local dev) |
+
+Phone OTP flow (if using a random OTP instead):
 
 1. `POST /api/auth/phone/send-otp` with `{"phoneNumber":"9876543210"}`
 2. OTP from Redis: `docker exec -it farmeasy-redis redis-cli GET otp:phone:9876543210`

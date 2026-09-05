@@ -1,0 +1,17 @@
+<!-- Smart Chip: sensor planted in soil -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Soil sensor">
+  <rect width="120" height="120" rx="26" fill="#4361ee"/>
+  <!-- soil ground -->
+  <path fill="#8b5e3c" d="M10 78h100v22H10z"/>
+  <path fill="#6b4423" d="M10 88h100v12H10z"/>
+  <!-- plant growing -->
+  <path fill="#52b788" d="M60 30c-8 12-12 22-12 32h24c0-10-4-20-12-32z"/>
+  <rect x="57" y="58" width="6" height="22" rx="2" fill="#40916c"/>
+  <!-- chip device in soil -->
+  <rect x="42" y="68" width="36" height="22" rx="4" fill="#212529"/>
+  <rect x="46" y="72" width="10" height="10" rx="1" fill="#4cc9f0"/>
+  <rect x="60" y="72" width="10" height="10" rx="1" fill="#4cc9f0"/>
+  <!-- signal waves -->
+  <path fill="none" stroke="#90e0ef" stroke-width="3" stroke-linecap="round" d="M24 52c8-8 16-8 24 0M20 44c12-12 24-12 36 0"/>
+  <path fill="none" stroke="#90e0ef" stroke-width="3" stroke-linecap="round" d="M96 52c-8-8-16-8-24 0M100 44c-12-12-24-12-36 0"/>
+</svg>

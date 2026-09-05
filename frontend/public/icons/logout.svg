@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Logout">
+  <rect width="48" height="48" rx="12" fill="#fff" stroke="#2d6a4f" stroke-width="2"/>
+  <path fill="none" stroke="#2d6a4f" stroke-width="3" stroke-linecap="round" d="M20 24h14M28 18l6 6-6 6"/>
+  <path fill="none" stroke="#2d6a4f" stroke-width="3" stroke-linecap="round" d="M14 14v20"/>
+</svg>

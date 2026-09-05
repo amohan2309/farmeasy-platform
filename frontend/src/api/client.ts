@@ -106,30 +106,51 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
 }
 
 export async function loginWithPassword(usernameOrEmail: string, password: string) {
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ usernameOrEmail, password }),
-  });
-  if (!res.ok) throw new Error('Login failed');
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usernameOrEmail, password }),
+    });
+  } catch {
+    throw new Error('NETWORK');
+  }
+  if (!res.ok) {
+    const msg = await res.text().catch(() => '');
+    if (res.status === 500 && msg.includes('Invalid credentials')) throw new Error('INVALID');
+    if (res.status === 500 && msg.includes('User not found')) throw new Error('INVALID');
+    throw new Error(`HTTP_${res.status}`);
+  }
   return (await res.json()) as LoginResponse;
 }
 
 export async function sendPhoneOtp(phoneNumber: string) {
-  await fetch(`${API_BASE}/api/auth/phone/send-otp`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phoneNumber }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}/api/auth/phone/send-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber }),
+    });
+  } catch {
+    throw new Error('NETWORK');
+  }
+  if (!res.ok) throw new Error('HTTP');
 }
 
 export async function verifyPhoneOtp(phoneNumber: string, otpCode: string) {
-  const res = await fetch(`${API_BASE}/api/auth/phone/verify`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phoneNumber, otpCode }),
-  });
-  if (!res.ok) throw new Error('OTP verification failed');
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}/api/auth/phone/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber, otpCode }),
+    });
+  } catch {
+    throw new Error('NETWORK');
+  }
+  if (!res.ok) throw new Error('INVALID');
   return (await res.json()) as LoginResponse;
 }
 

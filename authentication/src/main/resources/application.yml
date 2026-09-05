@@ -24,6 +24,9 @@ farmeasy:
     secret: ${JWT_SECRET:FarmEasySecretKeyChangeInProductionUse256BitsMinimum!!}
     access-expiration-ms: 3600000
     refresh-expiration-days: 7
+  auth:
+    dev-phone: ${DEV_LOGIN_PHONE:9876543210}
+    dev-otp: ${DEV_LOGIN_OTP:123456}
 
 springdoc:
   api-docs:

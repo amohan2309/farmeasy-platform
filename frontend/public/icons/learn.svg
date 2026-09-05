@@ -1,0 +1,16 @@
+<!-- Learn: farmer watching training video on phone -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Training videos">
+  <rect width="120" height="120" rx="26" fill="#9d4edd"/>
+  <!-- phone -->
+  <rect x="38" y="28" width="44" height="72" rx="8" fill="#212529"/>
+  <rect x="42" y="36" width="36" height="52" rx="4" fill="#fff"/>
+  <!-- play button on screen -->
+  <circle cx="60" cy="58" r="14" fill="#c77dff"/>
+  <path fill="#fff" d="M56 50l14 8-14 8z"/>
+  <!-- farmer head silhouette watching -->
+  <circle cx="88" cy="72" r="14" fill="#ffb703"/>
+  <path fill="#ffb703" d="M74 88c0-10 6-16 14-16s14 6 14 16v8H74v-8z"/>
+  <!-- book hint -->
+  <path fill="#ffd166" d="M18 68h16v28H18c0-8 0-16 0-28z"/>
+  <path fill="#f4a261" d="M34 68h4v28h-4c0-8 0-16 0-28z"/>
+</svg>

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebAppLayout from './layout/WebAppLayout';
 import LoginPage from './pages/LoginPage';
+import LauncherPage from './pages/LauncherPage';
 import HomePage from './pages/HomePage';
 import MarketplacePage from './pages/MarketplacePage';
 import MarketTradePage from './pages/MarketTradePage';
@@ -26,7 +27,8 @@ export default function App() {
           </PrivateRoute>
         }
       >
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LauncherPage />} />
+        <Route path="/dashboard" element={<HomePage />} />
         <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/market" element={<MarketTradePage />} />
         <Route path="/smart-chip" element={<SmartChipPage />} />
@@ -34,7 +36,7 @@ export default function App() {
         <Route path="/learn" element={<AppsPage />} />
         <Route path="/learn/:appId" element={<AppMenuPage />} />
         <Route path="/assistant" element={<ChatbotPage />} />
-        <Route path="/apps" element={<Navigate to="/learn" replace />} />
+        <Route path="/apps" element={<Navigate to="/" replace />} />
         <Route path="/apps/:appId" element={<Navigate to="/learn" replace />} />
         <Route path="/chatbot" element={<Navigate to="/assistant" replace />} />
       </Route>

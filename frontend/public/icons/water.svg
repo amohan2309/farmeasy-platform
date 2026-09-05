@@ -1,0 +1,18 @@
+<!-- Water: Indian hand pump irrigating crops -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Water pump">
+  <rect width="120" height="120" rx="26" fill="#0077b6"/>
+  <!-- hand pump body -->
+  <rect x="48" y="36" width="24" height="50" rx="4" fill="#adb5bd"/>
+  <rect x="44" y="32" width="32" height="10" rx="3" fill="#6c757d"/>
+  <!-- pump handle -->
+  <rect x="72" y="44" width="22" height="6" rx="3" fill="#495057"/>
+  <circle cx="96" cy="47" r="8" fill="#343a40"/>
+  <!-- water stream -->
+  <path fill="#90e0ef" d="M54 86c0 0 2 14 6 18s10 4 10 4 6-0 10-4 6-18 6-18H54z"/>
+  <path fill="#caf0f8" d="M58 90c0 0 1 8 4 10s6 2 6 2 4 0 6-2 4-10 4-10H58z"/>
+  <!-- crops being watered -->
+  <path fill="#52b788" d="M28 96c-4 0-6-4-6-8 0-6 6-14 6-14s6 8 6 14c0 4-2 8-6 8z"/>
+  <path fill="#52b788" d="M92 96c-4 0-6-4-6-8 0-6 6-14 6-14s6 8 6 14c0 4-2 8-6 8z"/>
+  <rect x="26" y="96" width="4" height="10" fill="#40916c"/>
+  <rect x="90" y="96" width="4" height="10" fill="#40916c"/>
+</svg>

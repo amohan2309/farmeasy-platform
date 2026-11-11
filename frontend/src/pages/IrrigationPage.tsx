@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { controlPump, getIrrigationSchedules, getWaterUsage, getWeatherAlerts, t, type IrrigationSchedule, type WaterUsage, type WeatherAlert } from '../api/client';
 
 export default function IrrigationPage() {
@@ -29,6 +30,11 @@ export default function IrrigationPage() {
       {alerts[0]?.alertMessage && (
         <p className="alert-banner">⚠ {String(alerts[0].alertMessage)}</p>
       )}
+      <p>
+        <Link className="back" to="/weather">
+          {t('Hourly weather forecast', 'घंटेवार मौसम पूर्वानुमान')}
+        </Link>
+      </p>
 
       <div className="stat-grid">
         <div className="card stat">

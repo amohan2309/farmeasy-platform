@@ -1,3 +1,8 @@
+import { DEFAULT_WEATHER_LOCATION } from '../data/weatherLocation';
+import { fetchOpenMeteoHourly, type HourlyForecast, type HourlyWeatherPoint } from './openMeteo';
+
+export type { HourlyForecast, HourlyWeatherPoint };
+
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export type LoginResponse = {
@@ -178,6 +183,17 @@ export async function bookEquipment(productId: string, bookingDate: string) {
 
 export async function getWeatherForecast(region = 'Punjab') {
   return apiGet(`/api/weather/forecast?region=${encodeURIComponent(region)}`);
+}
+
+export async function getHourlyWeatherForecast(
+  location: {
+    latitude?: number;
+    longitude?: number;
+    timezone?: string;
+    name?: string;
+  } = DEFAULT_WEATHER_LOCATION,
+): Promise<HourlyForecast> {
+  return fetchOpenMeteoHourly(location);
 }
 
 export async function getWeatherAlerts(region = 'Punjab'): Promise<WeatherAlert[]> {

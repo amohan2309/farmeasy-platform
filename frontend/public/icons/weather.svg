@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Weather">
+  <rect width="120" height="120" rx="26" fill="#f4a261"/>
+  <circle cx="44" cy="44" r="16" fill="#ffd166"/>
+  <path fill="#fff" d="M78 52c-2-10-12-16-22-14-4-10-16-14-26-8-8 4-12 14-10 22-10 2-16 12-14 22 2 10 12 16 22 14h46c10 0 18-8 18-18s-6-18-14-18z"/>
+  <path fill="#4cc9f0" d="M50 92c0 4 6 10 6 10s6-6 6-10-3-6-6-6-6 2-6 6z"/>
+  <path fill="#4cc9f0" d="M66 94c0 3 4 8 4 8s4-5 4-8-2-5-4-5-4 2-4 5z"/>
+</svg>

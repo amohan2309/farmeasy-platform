@@ -1,12 +1,7 @@
-<!-- Sell crop at mandi: wheat bundle + rupee -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Sell crop">
-  <rect width="120" height="120" rx="26" fill="#e76f51"/>
-  <!-- wheat bundle -->
-  <path fill="#f4d03f" d="M28 88V52c0-4 4-8 8-8h20l4-16h20l4 16h8c4 0 8 4 8 8v36H28z"/>
-  <path fill="#e8b923" d="M44 36c0-8 4-14 8-18 4 4 8 10 8 18v4H44v-4z"/>
-  <path fill="#e8b923" d="M60 32c0-10 5-18 10-22 5 4 10 12 10 22v8H60V32z"/>
-  <path fill="#e8b923" d="M76 36c0-8 4-14 8-18 4 4 8 10 8 18v4H76v-4z"/>
-  <!-- big rupee coin -->
-  <circle cx="88" cy="72" r="22" fill="#ffd166" stroke="#c9a227" stroke-width="3"/>
-  <text x="88" y="80" text-anchor="middle" font-size="26" font-weight="800" fill="#8b5a00" font-family="system-ui,sans-serif">?</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Sell">
+  <rect width="120" height="120" rx="26" fill="#e9c46a"/>
+  <path fill="#f4a261" d="M60 22c-18 0-32 14-32 32v8h64v-8c0-18-14-32-32-32z"/>
+  <rect x="24" y="62" width="72" height="36" rx="10" fill="#fff3cd"/>
+  <text x="60" y="88" text-anchor="middle" font-size="28" font-weight="700" fill="#2d6a4f" font-family="system-ui,sans-serif">₹</text>
+  <path fill="#2d6a4f" d="M48 34l4 8 8-2-2 8 8 2-6 6 2 8-8-4-8 4 2-8-6-6 8-2-2-8 8 2 4-8z" transform="translate(8,-6) scale(0.55)"/>
 </svg>

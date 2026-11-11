@@ -7,6 +7,7 @@ import MarketplacePage from './pages/MarketplacePage';
 import MarketTradePage from './pages/MarketTradePage';
 import SmartChipPage from './pages/SmartChipPage';
 import IrrigationPage from './pages/IrrigationPage';
+import WeatherPage from './pages/WeatherPage';
 import AppsPage from './pages/AppsPage';
 import AppMenuPage from './pages/AppMenuPage';
 import ChatbotPage from './pages/ChatbotPage';
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/market" element={<MarketTradePage />} />
         <Route path="/smart-chip" element={<SmartChipPage />} />
         <Route path="/irrigation" element={<IrrigationPage />} />
+        <Route path="/weather" element={<WeatherPage />} />
         <Route path="/learn" element={<AppsPage />} />
         <Route path="/learn/:appId" element={<AppMenuPage />} />
         <Route path="/assistant" element={<ChatbotPage />} />

@@ -7,12 +7,13 @@ export type AppTile = {
 };
 
 export const APP_TILES: AppTile[] = [
-  { id: 'shop', to: '/marketplace', icon: '/icons/shop.svg', ariaLabel: 'Buy seeds and tools' },
-  { id: 'water', to: '/irrigation', icon: '/icons/water.svg', ariaLabel: 'Water pump and irrigation' },
-  { id: 'smart-chip', to: '/smart-chip', icon: '/icons/smart-chip.svg', ariaLabel: 'Soil sensor in field' },
-  { id: 'ai', to: '/assistant', icon: '/icons/ai.svg', ariaLabel: 'Photo crop disease check' },
-  { id: 'sell', to: '/market', icon: '/icons/sell.svg', ariaLabel: 'Sell crop for money' },
-  { id: 'learn', to: '/learn', icon: '/icons/learn.svg', ariaLabel: 'Watch farming videos' },
+  { id: 'shop', to: '/marketplace', icon: '/icons/shop.svg', ariaLabel: 'Shop' },
+  { id: 'sell', to: '/market', icon: '/icons/sell.svg', ariaLabel: 'Sell crop' },
+  { id: 'smart-chip', to: '/smart-chip', icon: '/icons/smart-chip.svg', ariaLabel: 'Smart Chip' },
+  { id: 'water', to: '/irrigation', icon: '/icons/water.svg', ariaLabel: 'Water and irrigation' },
+  { id: 'weather', to: '/weather', icon: '/icons/weather.svg', ariaLabel: 'Weather' },
+  { id: 'learn', to: '/learn', icon: '/icons/learn.svg', ariaLabel: 'Learn' },
+  { id: 'ai', to: '/assistant', icon: '/icons/ai.svg', ariaLabel: 'Crop AI camera' },
 ];
 
 export const LAUNCHER_PATH = '/';

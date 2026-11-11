@@ -15,6 +15,14 @@ spring:
       hibernate:
         default_schema: weather
 
+farmeasy:
+  weather:
+    open-meteo-url: ${OPEN_METEO_URL:https://api.open-meteo.com/v1/forecast}
+    latitude: ${WEATHER_LATITUDE:25.5941}
+    longitude: ${WEATHER_LONGITUDE:85.1356}
+    timezone: ${WEATHER_TIMEZONE:auto}
+    location-name: ${WEATHER_LOCATION_NAME:Patna, India}
+
 management:
   endpoints:
     web:
